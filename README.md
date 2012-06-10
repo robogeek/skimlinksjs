@@ -28,6 +28,7 @@ Query
 Now, let's see how to query for a product:
 
     var skimlinks = require('./index.js');
+    var util = require('util');
     skimlinks.setup(" ... product API key provided by Skimlinks ... ");
   
     skimlinks.query(" ... product keywords ... ", 0, 300, function(data) {
@@ -45,6 +46,7 @@ Categories
 Now, let's see how get the list of categories:
 
     var skimlinks = require('./index.js');
+    var util = require('util');
     skimlinks.setup(" ... product API key provided by Skimlinks ... ");
     skimlinks.categories(function(cats) {
         util.log(util.inspect(cats));
