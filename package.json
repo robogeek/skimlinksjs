@@ -1,0 +1,19 @@
+{
+  "author": "David Herron <david@davidherron.com> (http://nodejs.davidherron.com)",
+  "name": "SkimlinksJS",
+  "description": "Skimlinks Product API for Node.js",
+  "version": "0.0.1",
+  "repository" : { 
+    "type": "git", 
+    "url": "git://github.com/robogeek/skimlinksjs.git"
+  },
+  "bugs": "https://github.com/robogeek/skimlinksjs/issues",
+  "homepage": "https://github.com/robogeek/skimlinksjs",
+  "engines": {
+    "node": "~0.6.15"
+  },
+  "directories" : { "lib" : "./lib" },
+  "dependencies": { },
+  "devDependencies": {}
+}
+
