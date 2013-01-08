@@ -27,18 +27,46 @@ Query
 
 Now, let's see how to query for a product:
 
-    var skimlinks = require('./index.js');
+    var skimlinks = require('skimlinksjs');
     var util = require('util');
     skimlinks.setup(" ... product API key provided by Skimlinks ... ");
   
-    skimlinks.query(" ... product keywords ... ", 0, 300, function(data) {
+    skimlinks.query({
+       // params object
+    }, function(data) {
       util.log("# found: " + data.skimlinksProductAPI.numFound);
       data.skimlinksProductAPI.products.forEach(function(row) {
         util.log(util.inspect(row));
       });
     });
 
-So far this supports everything in the Skimlinks Product API except for the "fq" (Filter Query) parameter.
+The `params` object has fields similar to the skimlinks API (of course).
+
+* `start` and `rows` correspond to the same files in the skimlinks API, and control where the results start at, and the number of rows to return
+* `q` is the query string, formatted per [Solr Query Syntax](http://wiki.apache.org/solr/SolrQuerySyntax)
+* `fq` is the filter string, formatted per [Solr Query Filtering](http://wiki.apache.org/solr/CommonQueryParameters#fq)
+
+Example params objects
+
+    {
+        q: "title:\"electric bicycle\"",
+        fq: "country:US"
+    }
+
+Returns electric bicycle products sold in the US
+
+    {
+        q: "title:\"electric bicycle\"",
+        fq: "merchant:(Amazon OR Target)"
+    }
+
+Returns electric bicycle products sold by either Amazon or Target
+
+    {
+        q: "id:###########"
+    }
+
+Returns information for a specific product.
 
 Categories
 ==========
