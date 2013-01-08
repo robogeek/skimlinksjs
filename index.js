@@ -12,7 +12,58 @@ exports.setup = function(token) {
     apitoken = token;
 }
 
-exports.query = function(searchFor, start, rows, done) {
+exports.query = function(params, done) {
+    var qryobj = {
+            key: apitoken,
+            q: "",
+            start: 0,
+            format: "json",
+            rows: 50
+    };
+
+    if (params.searchFor) qryobj.q      = params.searchFor;
+    if (params.format)    qryobj.format = params.format;
+    if (params.start)     qryobj.start  = params.start;
+    if (params.rows)      qryobj.rows   = params.rows;
+    if (params.fq)        qryobj.fq     = params.fq;
+    
+    var requrl = url.format({
+            protocol: "http",
+            host: apidmn,
+            pathname: "/query",
+            query: qryobj
+        });
+    util.log("REQUEST URL: " + requrl);
+
+    request({
+        method: 'GET',
+        uri: requrl
+    }, function(error, response, body) {
+        if (error) { done(error); } // handle error
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          var json = JSON.parse(body);
+          if (json.skimlinksProductAPI.products) {
+              json.skimlinksProductAPI.products.forEach(function(item) {
+                  if (item.price) {
+                      var pr = item.price;
+                      item.price = pr / 100;
+                  }
+              });
+          }
+          json.requrl = requrl;
+          done(null, json);
+        } else { // generate error
+            done({
+                reason: 'request error: '+ response.statusCode,
+                response: response,
+                body: body
+            });
+        }
+    });
+}
+
+// fq - filter query support
+exports.queryOld = function(searchFor, start, rows, done) {
     var qryobj = {
             key: apitoken,
             q: searchFor,
@@ -109,19 +160,15 @@ exports.merchantDomains = function(done, start, rows) {
 }
 
 exports.merchantSearch = function(done, searchFor, start, rows) {
+    var path = "/merchants/json/"+apitoken+"/search/"+searchFor;
+    if (start && start !== "") path += "/start/" +start;
+    if (rows  && rows  !== "") path += "/limit/" +rows;
     request({
         method: 'GET',
         uri: url.format({
             protocol: "http",
-            host: apidmn,
-            pathname: "/merchants/search",
-            query: {
-                key: apitoken,
-                format: "json",
-                search: searchFor,
-                start: start,
-                rows: rows
-            }
+            host: "api-merchants.skimlinks.com",
+            pathname: path
         })
     }, function(error, response, body) {
         if (error) { done(error); } // handle error
