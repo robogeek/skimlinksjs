@@ -1,0 +1,36 @@
+
+<p align="center">
+<form method="post" action="/">
+    Start: <input type='text' name='start' value='<%= start !== "undefined" ? start : "" %>'/>
+    Rows: <input type='text' name='rows' value='<%= rows !== "undefined" ? rows : "" %>'/>
+    <br/>Search For: <input type='text' name='searchFor' size='60' value='<%= searchFor !== "undefined" ? searchFor : "" %>'/>
+    <br/>Filter: <input type='text' name='filter' size='60' value='<%= filter !== "undefined" ? filter : "" %>'/>
+    <input type="submit" value="Query"/>
+</form>
+</p>
+
+
+<%
+if (typeof requrl !== 'undefined') {
+%><p>Items URL= <%= requrl %></p><%
+}
+
+if (typeof items !== 'undefined') {
+items.forEach(function(item) { %>
+<table width="100%" style="max-width: 100%">
+    <tr>
+        <th colspan=2><%= item.title %></th><td><%= item.merchant %></td>
+    </tr>
+    <tr><td colspan=3><img src="<%= item.imageUrl %>" align="right"><%- item.description %></td></tr>
+    <tr><td colspan=3><%= item.price %> currency: <%= item.currency %> country: <%= item.country %></td></tr>
+    <tr><td colspan=3><a href="<%= item.url%>"><%= item.url %></a></td></tr>
+    <tr><td colspan=3>id: <%= item.id %> groupid: <%= item.groupId %> productId: <%= item.productId %> merchantid: <%= item.merchantId %></td></tr>
+    <tr><td colspan=3><%= JSON.stringify(item.categorisation) %></td></tr>
+    <tr><td colspan=3><%= JSON.stringify(item.identifiers) %></td></tr>
+    <!-- <tr><td colspan=3><%= JSON.stringify(item) %></td></tr> -->
+</table>
+<%
+    });
+    }
+%>
+

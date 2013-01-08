@@ -1,0 +1,17 @@
+
+
+
+<% items.forEach(function(item) { %>
+<table width="100%" style="max-width: 100%">
+    <tr>
+        <th colspan=2><%= item.title %></th><td><%= item.merchant %></td>
+    </tr>
+    <tr><td colspan=3><img src="<%= item.imageUrl %>" align="right"><%- item.description %></td></tr>
+    <tr><td colspan=3><%= item.price %> currency: <%= item.currency %> country: <%= item.country %></td></tr>
+    <tr><td colspan=3><a href="<%= item.url%>"><%= item.url %></a></td></tr>
+    <tr><td colspan=3>id: <%= item.id %> groupid: <%= item.groupId %> productId: <%= item.productId %> merchantid: <%= item.merchantId %></td></tr>
+    <tr><td colspan=3><%= JSON.stringify(item.categorisation) %></td></tr>
+    <tr><td colspan=3><%= JSON.stringify(item.identifiers) %></td></tr>
+    <!-- <tr><td colspan=3><%= JSON.stringify(item) %></td></tr> -->
+</table>
+<% }); %>
