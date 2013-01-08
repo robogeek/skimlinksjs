@@ -19,8 +19,17 @@ Basic Setup
 
 Any program must start with this (required to initialize the module with your API key):
 
-    var skimlinks = require('./index.js');
-    skimlinks.setup(" ... product API key provided by Skimlinks ... ");
+    var skimlinks = require('skimlinksjs');
+    var config = require('./config.js');
+    skimlinks.setup(config.key);
+
+The config file (`config.js`) should look something like this:
+
+    module.exports = {
+        key: " ... product API key provided by Skimlinks ... "
+    }
+
+Truthfully, the `config.js` is unnecessary as all that needs to be done is give the key to the `setup` function.  Putting this in a module allows you to share configuration information among several programs, as well as with the examples bundled in the skimlinksjs repository.
 
 Query
 =====
@@ -29,7 +38,8 @@ Now, let's see how to query for a product:
 
     var skimlinks = require('skimlinksjs');
     var util = require('util');
-    skimlinks.setup(" ... product API key provided by Skimlinks ... ");
+    var config = require('./config.js');
+    skimlinks.setup(config.key);
   
     skimlinks.query({
        // params object
@@ -75,7 +85,8 @@ Now, let's see how get the list of categories:
 
     var skimlinks = require('./index.js');
     var util = require('util');
-    skimlinks.setup(" ... product API key provided by Skimlinks ... ");
+    var config = require('./config.js');
+    skimlinks.setup(config.key);
     skimlinks.categories(function(cats) {
         util.log(util.inspect(cats));
     });
