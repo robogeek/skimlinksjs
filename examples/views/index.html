@@ -1,10 +1,10 @@
 
 <p align="center">
 <form method="post" action="/">
-    Start: <input type='text' name='start' value='<%= start !== "undefined" ? start : "" %>'/>
-    Rows: <input type='text' name='rows' value='<%= rows !== "undefined" ? rows : "" %>'/>
-    <br/>Search For: <input type='text' name='searchFor' size='60' value='<%= searchFor !== "undefined" ? searchFor : "" %>'/>
-    <br/>Filter: <input type='text' name='filter' size='60' value='<%= filter !== "undefined" ? filter : "" %>'/>
+    Start: <input type='text' name='start' value='<%= typeof start !== "undefined" ? start : "" %>'/>
+    Rows: <input type='text' name='rows' value='<%= typeof rows !== "undefined" ? rows : "" %>'/>
+    <br/>Search For: <input type='text' name='searchFor' size='60' value='<%= typeof searchFor !== "undefined" ? searchFor : "" %>'/>
+    <br/>Filter: <input type='text' name='filter' size='60' value='<%= typeof filter !== "undefined" ? filter : "" %>'/>
     <input type="submit" value="Query"/>
 </form>
 </p>
