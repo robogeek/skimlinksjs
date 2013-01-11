@@ -1,6 +1,6 @@
 {
   "author": "David Herron <david@davidherron.com> (http://nodejs.davidherron.com)",
-  "name": "SkimlinksJS",
+  "name": "skimlinksjs",
   "description": "Skimlinks Product API for Node.js",
   "version": "0.0.1",
   "repository" : { 
