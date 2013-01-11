@@ -8,8 +8,21 @@ var request = require('request');
 var apitoken = undefined;
 var apidmn   = "api-product.skimlinks.com";
 
-exports.setup = function(token) {
+var siteID   = undefined;
+var redirecturl = "go.redirectingat.com";
+
+var buildRedirect = exports.buildRedirect = function(params) {
+    return url.format({
+        protocol: "http",
+        host: redirecturl,
+        path: "/",
+        query: params
+    });
+}
+
+exports.setup = function(token, theSiteId) {
     apitoken = token;
+    siteID   = theSiteId;
 }
 
 exports.query = function(params, done) {
@@ -47,6 +60,18 @@ exports.query = function(params, done) {
                   if (item.price) {
                       var pr = item.price;
                       item.price = pr / 100;
+                  }
+                  if (item.url) {
+                    var redirparams = {
+                        id: siteID,
+                        url: item.url,
+                        xs: 1
+                        // xcust - customer token
+                        // sref - URL of calling page
+                    };
+                    if (params.xcust) redirparams.xcust = params.xcust;
+                    if (params.sref)  redirparams.sref  = params.sref;
+                    item.url = buildRedirect(redirparams);
                   }
               });
           }
